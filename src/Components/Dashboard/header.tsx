@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 const headerStyle: React.CSSProperties = {
   display: 'flex',
@@ -22,9 +23,9 @@ function Header() {
       <span>Moeeg</span>
       <nav>
         <ul style={{ listStyle: 'none', padding: 0, display: 'flex' }}>
-          <li><a href="/" style={linkStyle}>Inicio</a></li>
-          <li><a href="/doc-list-pac" style={linkStyle}>Paciente</a></li>
-          <li><a href="/modelo" style={linkStyle}>Modelo</a></li>
+          <li><Link to="/" style={linkStyle}>Inicio</Link></li>
+          <li><Link to="/doc-list-pac" style={linkStyle}>Paciente</Link></li>
+          <li><Link to="/" style={linkStyle}>Modelo</Link></li>
         </ul>
       </nav>
     </header>
