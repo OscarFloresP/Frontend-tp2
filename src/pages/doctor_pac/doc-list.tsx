@@ -9,21 +9,21 @@ interface IPatients {
   name: string;
   dni:number;
   email:string;
-  password:string;
+  //password:string;
   phone: string;
   age: number;
   contact_name: string;
   contact_phone: string;
 }
-
-function DocListPac() {
+interface DocListPacProps {
+  appToken: string | null;
+}
+function DocListPac({ appToken }: DocListPacProps) {
   const [isFormVisible, setFormVisible] = useState<boolean>(false);
-
 
   const [name, setName] = useState('');
   const [dni, setDni] = useState('');
   const [email, setEmail] =useState('');
-  const [password,setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [age, setAge] = useState('');
   const [contact_name, setContact_name] = useState('');
@@ -34,20 +34,20 @@ function DocListPac() {
 
   const [patients, setPatients] = useState<IPatients[]>([]);
   
-  const pacientPost = async (e:any)=> {
+  const patientPost = async (e:any)=> {
       e.preventDefault();
-
+      
       if(!edit){
         const res = await fetch(`${API}/patients`,{
           method: "POST",
           headers:{
             "Content-Type": "application/json",
+            Authorization: `Bearer ${appToken}`
           },
           body: JSON.stringify({
             name,
             dni,
             email,
-            password,
             phone,
             age,
             contact_name,
@@ -56,21 +56,21 @@ function DocListPac() {
         });
         await res.json();
       }else{
-        const res = await fetch(`${API}/patient/${id}`,{
+        const res = await fetch(`${API}/patients/${id}`,{
           method: "PUT",
           headers: {
-            "content-type": "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${appToken}`,
           },
           body: JSON.stringify({
             name,
             dni,
             email,
-            password,
             phone,
             age,
             contact_name,
             contact_phone
-          })
+          }),
         })
         const data = await res.json();
         console.log(data);
@@ -83,7 +83,7 @@ function DocListPac() {
       setName('');
       setEmail('');
       setDni('');
-      setPassword('');
+      //setPassword('');
       setPhone('');
       setAge('');
       setContact_name('');
@@ -91,7 +91,12 @@ function DocListPac() {
   }
 
   const getPatients = async ()=>{
-    const res = await fetch(`${API}/patients`)
+    const res = await fetch(`${API}/patients`,{
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${appToken}`,
+      }
+    })
     const data = await res.json();
    
     setPatients(data);
@@ -102,16 +107,19 @@ function DocListPac() {
 
   const editPatient = async (id:string) => {
 
-    const res= await fetch(`${API}/patients/${id}`)
+    const res= await fetch(`${API}/patients/${id}`,{
+      headers: {
+        Authorization: `Bearer ${appToken}`,
+      }
+    })
     const data = await res.json();
-
-    setEdit(true)
-    setId(id)
+    console.log(id);
+    setEdit(true);
+    setId(id);
 
     setName(data.name);
     setEmail(data.email);
     setDni(data.dni);
-    setPassword(data.password);
     setPhone(data.phone);
     setAge(data.age);
     setContact_name(data.contact_name);
@@ -123,6 +131,9 @@ function DocListPac() {
     const userResponse = window.confirm('Seguro que quieres borrarlo?')
     if (userResponse){
       const res = await fetch(`${API}/patients/${id}`,{
+        headers: {
+          Authorization: `Bearer ${appToken}`
+      },
         method: 'DELETE'
       });
       await res.json();
@@ -132,7 +143,7 @@ function DocListPac() {
 
   return (
     <>
-      <Header />
+      <Header appToken={appToken}/>
       <div className="container p-4">
       <button
           onClick={() => setFormVisible(!isFormVisible)}
@@ -152,7 +163,7 @@ function DocListPac() {
             <div className="col-md-6 offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <form onSubmit={pacientPost}>
+                  <form onSubmit={patientPost}>
                     <div className="form-group">
                       <div className="col">
                         <div className="row pt-2" >
@@ -182,7 +193,7 @@ function DocListPac() {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
-                        <div className="row pt-2">
+                        {/* <div className="row pt-2">
                           <input
                             type="password"
                             className="form-control"
@@ -190,7 +201,7 @@ function DocListPac() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
-                        </div>
+                        </div> */}
                         <div className="row pt-2">
                           <input
                             type="text"
@@ -271,10 +282,10 @@ function DocListPac() {
                   <h2>Nombre: {patient.name}</h2>
                   <p>DNI: {patient.dni}</p>
                   <p>Correo: {patient.email}</p>
-                  <p>Telefono: {patient.phone}</p>
+                  {/* <p>Telefono: {patient.phone}</p>
                   <p>Edad: {patient.age}</p>
                   <p>Contacto: {patient.contact_name}</p>
-                  <p>Numero del tutor: {patient.contact_phone}</p>
+                  <p>Numero del tutor: {patient.contact_phone}</p> */}
                 </div>
                 <div>
                   <button
