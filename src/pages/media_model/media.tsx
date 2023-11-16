@@ -191,26 +191,7 @@ function Media({ appToken }: MediaProps) {
     const data = await res.json();
     console.log(data);
     return data;
-  }
-  // const getFileId = async () => {
-  //   try {
-  //     const res = await fetch(`${API}/files/${media_id}`);
-  //     if (!res.ok) {
-  //       console.error('Error fetching files:', res.statusText);
-  //       return;
-  //     }
-  
-  //     const data = await res.json();
-  //     console.log(data);  // Verifica los datos recibidos
-  //     console.log(media_id);
-  //     //console.log('No carga');
-  //     setFiles(data);
-  //     console.log("soy files: "+files);
-  //   } catch (error) {
-  //     console.error('Error fetching files:', error);
-  //   }
-  // };
-  
+  }  
 
   useEffect(() => {
     getPatient();
@@ -223,125 +204,154 @@ function Media({ appToken }: MediaProps) {
   
   return (
     <>
-      <Header appToken={appToken}/>
+      <Header appToken={appToken} />
       <div className="container p-2">
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
+        <div className="row">
+          <div className="col-md-6">
             <div className="pt-4 pb-4">
               <input type="file" accept=".edf" onChange={handleFileChange} />
             </div>
+          </div>
+          <div className="col-md-6 d-flex align-items-center justify-content-end">
             <button
               className="btn btn-success"
               style={{
                 backgroundColor: '#65F64D',
                 color: '#000',
-                borderRadius: '10px',
+                //borderRadius: '10px',
                 padding: '10px 10px',
               }}
               onClick={subida}
             >
-              Entrenar modelo
+              Subir modelo
             </button>
           </div>
         </div>
-        <form onSubmit={observationPost}>
-          <div className="pt-4 pb-4">
-            Paciente:
-            <br />
-            <select onChange={(e) => setPatient_id(e.target.value)}>
-              <option value="">Selecciona una opción</option>
-              {patients.map((patient: IPatient) => (
-                <option key={patient._id} value={patient._id}>
-                  {patient.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="pt-4 pb-4">
-            Medias:
-            <br />
-            <select onChange={(e) => setMedia_id(e.target.value)}>
-              <option value="">Selecciona una opción</option>
-              {medias.map((media: IMedia) => (
-                <option key={media._id} value={media._id}>
-                  {media.file_name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <button className="btn btn-secondary mb-3">
-              Crear observacion
-            </button>
+        <form onSubmit={observationPost} style={{ marginBottom:'20px'}}>
+          <div className="row justify-content-between">
+            <div className="col-md-4">
+              <div className="pt-4 pb-4">
+                Paciente:
+                <br />
+                <select onChange={(e) => setPatient_id(e.target.value)}>
+                  <option value="">Selecciona una opción</option>
+                  {patients.map((patient: IPatient) => (
+                    <option key={patient._id} value={patient._id}>
+                      {patient.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="col-md-4 d-flex align-items-center justify-content-center">
+              <div className="pt-4 pb-4">
+                Medias:
+                <br />
+                <select onChange={(e) => setMedia_id(e.target.value)}>
+                  <option value="">Selecciona una opción</option>
+                  {medias.map((media: IMedia) => (
+                    <option key={media._id} value={media._id}>
+                      {media.file_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="col-md-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <button 
+                  className="btn btn-secondary"
+                  style={{
+                    backgroundColor: '#65F64D', 
+                    color: '#000',  
+                    padding: '10px 10px',
+                    marginTop: '30px', // Adjust the margin-bottom value
+                  }}
+                >
+                  Crear observación
+                </button>
+            </div>
           </div>
         </form>
         <div className="card card-body mt-2 pb-1">
-          {observations.map((observation: IObservation) => (
-            <div
-              key={observation._id}
-              className="card mb-4"
-              style={{
-                backgroundColor: '#69F9F0',
-                border: '2px solid black',
-                borderRadius: '12px',
-              }}
-            >
-              <div style={{ padding: '10px 0px 0px 20px' }}>
-                <h2>Paciente: {observation.patient_name}</h2>
-                <p>Registro: {observation.file_name}</p>
-                <p>Doctor: {observation.doctor_name}</p>
-              </div>
-              <button
-                className="btn btn-primary"
-                style={{
-                  backgroundColor: '#65F64D',
-                  border: '1px solid black',
-                  color: 'black',
-                  borderRadius: '10px',
-                }}
-                onClick={(e) => createResult(observation._id, e)}
-              >
-                Crear resultado
-              </button>
-              <button
-                className="btn btn-danger ml-2 "
-                style={{
-                  backgroundColor: '#65F64D',
-                  border: '1px solid black',
-                  color: 'black',
-                  borderRadius: '10px',
-                }}
-                value={results_id}
-                onClick={(e) => deleteObservation(observation._id)}
-              >
-                Eliminar
-              </button>
-            </div>
-          ))}
+{observations.length === 0 ? (
+    <p className="text-center" >No hay observaciones disponibles.
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    </p>
+) : (observations.map((observation: IObservation) => (
+      <div
+        key={observation._id}
+        className="card mb-4"
+        style={{
+          backgroundColor: '#69F9F0',
+          border: '2px solid black',
+          borderRadius: '12px',
+        }}
+      >
+        <div style={{ padding: '10px 0px 0px 20px' }}>
+          <h2>Paciente: {observation.patient_name}</h2>
+          <p>Registro: {observation.file_name}</p>
+          <p>Doctor: {observation.doctor_name}</p>
         </div>
-        <div>
-          Tiempos:
-          <br />
-          {results.map((result: IResult) => (
-            <div key={result._id}>
-              <h3>
-                {result.ictal_time && typeof result.ictal_time === 'string' ? (
-                  <ul>
-                    {JSON.parse(result.ictal_time).map(
-                      (time: number[], index: number) => (
-                        <li key={index}>
-                          {`TI: ${time[0]} - TF: ${time[1]}`}
-                        </li>
-                      )
+        <button
+          className="btn btn-primary"
+          style={{
+            backgroundColor: '#65F64D',
+            border: '1px solid black',
+            color: 'black',
+            borderRadius: '10px',
+          }}
+          onClick={(e) => createResult(observation._id, e)}
+        >
+          Crear resultado
+        </button>
+        <button
+          className="btn btn-danger ml-2 "
+          style={{
+            backgroundColor: '#65F64D',
+            border: '1px solid black',
+            color: 'black',
+            borderRadius: '10px',
+          }}
+          value={results_id}
+          onClick={(e) => deleteObservation(observation._id)}
+        >
+          Eliminar
+        </button>
+      </div>
+    )))}
+    </div>
+    <div>
+  <br />
+          {results.length === 0 ? (
+            <p></p>
+          ) : (
+            <div>
+              <p>Tiempo: <br/></p>
+              {results.map((result: IResult) => (
+                <div key={result._id}>
+                  <h3>
+                    {result.ictal_time && typeof result.ictal_time === 'string' ? (
+                      <ul>
+                        {JSON.parse(result.ictal_time).map((time: number[], index: number) => (
+                          <li key={index}>
+                            {`TI: ${time[0]} - TF: ${time[1]}`}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>Error: Formato de ictal_time incorrecto</span>
                     )}
-                  </ul>
-                ) : (
-                  <span>Error: Formato de ictal_time incorrecto</span>
-                )}
-              </h3>
+                  </h3>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+</div>
       </div>
       <Footer />
     </>

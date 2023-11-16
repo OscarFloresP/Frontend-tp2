@@ -38,12 +38,11 @@ function Header({ appToken }:HeaderProps) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${appToken}`,
         },
-        //credentials: 'include', // Incluye las credenciales (cookies) en la solicitud
       });
       if (response.ok) {
         const data: LogoutResponse = await response.json();
         console.log(data.message);
-        navigate('/'); // Redirige a la página de inicio de sesión después del cierre de sesión
+        navigate('/'); 
       } else {
         console.error('Logout failed');
       }
@@ -52,12 +51,13 @@ function Header({ appToken }:HeaderProps) {
 
   return (
     <header style={headerStyle}>
-      <span>Moeeg</span>
-      <nav>
+      {/* <img src='../moEeg.png' alt="logo" style={{ marginTop: '20px' }} /> */}
+      <p style={{marginTop:'20px', marginLeft: '100px'}}>Moeeg</p>
+      <nav style={{marginTop:'20px'}}>
         <ul style={{ listStyle: 'none', padding: 0, display: 'flex' }}>
-          <li><Link to="/doc-list-pac" style={linkStyle}>Pacientes</Link></li>
-          <li><Link to="/model" style={linkStyle}>Modelo</Link></li>
-          <li>
+          <li style={{marginLeft:'20px'}}><Link to="/doc-list-pac" style={linkStyle}>Pacientes</Link></li>
+          <li style={{marginLeft:'20px'}}><Link to="/model" style={linkStyle}>Modelo</Link></li>
+          <li style={{marginLeft:'20px', marginRight: '60px'}}>
             <span style={linkStyle} onClick={handleLogout}>
               Cerrar Sesión
             </span>

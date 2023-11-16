@@ -153,13 +153,14 @@ function DocListPac({ appToken }: DocListPacProps) {
             border: "1px solid black",
             borderRadius: "10px",
             color: "black",
+            marginBottom:'20px'
           }}
         >
-          {isFormVisible ? "Ocultar" : "Agregar nuevo paciente"}
+          {isFormVisible ? "Ocultar formulario" : "Agregar nuevo paciente"}
         </button>
 
         {isFormVisible && (
-          <div className="row">
+          <div className="row" style={{marginBottom:'30px'}}>
             <div className="col-md-6 offset-md-3">
               <div className="card">
                 <div className="card-body">
@@ -264,7 +265,15 @@ function DocListPac({ appToken }: DocListPacProps) {
           style={{ border: "2px solid black", borderRadius: "10px" }}
         >
         {patients.length === 0 ? (
-            <p className="text-center">No hay pacientes registrados</p>
+            <><p className="text-center">No hay pacientes registrados</p>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            </>
           ) : 
           (patients.map((patient: IPatients) =>(
               <div key={patient._id}
