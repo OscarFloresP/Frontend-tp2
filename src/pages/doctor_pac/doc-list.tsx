@@ -149,10 +149,10 @@ function DocListPac({ appToken }: DocListPacProps) {
           onClick={() => setFormVisible(!isFormVisible)}
           className="btn btn-primary btn-block"
           style={{
-            backgroundColor: "#65F64D",
-            border: "1px solid black",
-            borderRadius: "10px",
-            color: "black",
+            // backgroundColor: "#65F64D",
+            // border: "1px solid black",
+            // borderRadius: "10px",
+            // color: "black",
             marginBottom:'20px'
           }}
         >
@@ -194,15 +194,6 @@ function DocListPac({ appToken }: DocListPacProps) {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
-                        {/* <div className="row pt-2">
-                          <input
-                            type="password"
-                            className="form-control"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                        </div> */}
                         <div className="row pt-2">
                           <input
                             type="text"
@@ -244,11 +235,11 @@ function DocListPac({ appToken }: DocListPacProps) {
                     <button
                       className="btn btn-success btn-block"
                       style={{
-                        backgroundColor: "#65F64D",
-                        border: "1px solid black",
-                        borderRadius: "10px",
-                        color: "black",
-                        marginTop:"10px",
+                        // backgroundColor: "#65F64D",
+                        // border: "1px solid black",
+                        // borderRadius: "10px",
+                        // color: "black",
+                         marginTop:"10px",
                       }}
                     >
                       {edit ? "Editar":"Agregar nuevo paciente"}
@@ -278,9 +269,9 @@ function DocListPac({ appToken }: DocListPacProps) {
           (patients.map((patient: IPatients) =>(
               <div key={patient._id}
               style={{
-                backgroundColor: "#69F9F0",
-                border: "2px solid black",
-                borderRadius: "10px",
+                //backgroundColor: "#69F9F0",
+                //border: "2px solid black",
+                //borderRadius: "10px",
                 padding: "10px",
                 marginBottom: "10px",
                 display: "flex",
@@ -300,11 +291,11 @@ function DocListPac({ appToken }: DocListPacProps) {
                   <button
                     className="btn btn-primary"
                     style={{
-                      backgroundColor: "#65F64D",
-                      border: "1px solid black",
-                      color: "black",
-                      marginRight:"10px",
-                      borderRadius: "10px"
+                      // backgroundColor: "#65F64D",
+                      // border: "1px solid black",
+                      // color: "black",
+                       marginRight:"20px",
+                      // borderRadius: "10px"
                     }}
                     onClick={(e) => editPatient(patient._id)}
                   >
@@ -313,10 +304,11 @@ function DocListPac({ appToken }: DocListPacProps) {
                   <button
                     className="btn btn-danger ml-2"
                     style={{
-                      backgroundColor: "#65F64D",
-                      border: "1px solid black",
-                      color: "black",
-                      borderRadius: "10px"
+                      // backgroundColor: "#65F64D",
+                      // border: "1px solid black",
+                      // color: "black",
+                      marginRight:"20px",
+                      // borderRadius: "10px"
                     }}
                     onClick={(e) => deletePatient(patient._id)}
                   >

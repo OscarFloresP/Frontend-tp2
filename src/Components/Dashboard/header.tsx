@@ -7,14 +7,14 @@ const headerStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: '#69F9F0',
-  color: '#000',
+  backgroundColor: '#00A5B2',
+  color: '#FFF',
   padding: '10px 20px',
 };
 
 const linkStyle: React.CSSProperties = {
   textDecoration: 'none',
-  color: '#000',
+  color: '#FFF',
   marginRight: '10px',
   listStyle: 'none',
   cursor: 'pointer',

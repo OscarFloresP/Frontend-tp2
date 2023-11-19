@@ -1,15 +1,9 @@
 import React from 'react';
 
 const footerStyle: React.CSSProperties = {
-  backgroundColor: '#69F9F0',
-  color: '#000',
+  backgroundColor: '#00A5B2',
+  color: '#FFF',
   padding: '20px',
-};
-
-const linkStyle: React.CSSProperties = {
-  textDecoration: 'none',
-  color: '#000',
-  marginRight: '10px',
 };
 
 const columnStyle: React.CSSProperties = {
@@ -20,7 +14,7 @@ const columnStyle: React.CSSProperties = {
 };
 
 const contactStyle: React.CSSProperties = {
-  borderBottom: '1px solid #000',
+  borderBottom: '1px solid #FFF',
   width: '100px',
   paddingBottom: '4px',
   marginBottom: '30px',
@@ -28,7 +22,7 @@ const contactStyle: React.CSSProperties = {
 
 const copyrightStyle: React.CSSProperties = {
   textAlign: 'center',
-  borderTop: '1px solid #000',
+  borderTop: '1px solid #FFF',
   padding: '10px 0',
 };
 
