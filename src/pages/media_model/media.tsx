@@ -223,7 +223,7 @@ function Media({ appToken }: MediaProps) {
             </button>
           </div>
         </div>
-        <form onSubmit={observationPost} style={{ marginBottom: "20px" }}>
+        <form onSubmit={observationPost} style={{ marginBottom: "20px", borderTop: '2px solid #000' }}>
           <div className="row justify-content-between">
             <div className="col-md-4">
               <div className="pt-4 pb-4">
