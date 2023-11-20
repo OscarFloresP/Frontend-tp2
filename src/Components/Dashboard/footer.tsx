@@ -37,11 +37,10 @@ function Footer() {
           <p>+51 966 371 128</p>
         </div>
         <div style={columnStyle}>
-          <h3>Envianos un mensaje</h3>
+          <h3>Tienes un probema tecnicos? Contactanos</h3>
           <p>Nombre: <input type="text" placeholder="Escribe tu nombre" style={{ padding: '5px', marginTop: '5px', width: '300px'}} /></p>
           <p>Correo:  <input type="text" placeholder="Escribe tu correo" style={{ padding: '5px', marginTop: '5px',marginLeft:'10px',width: '300px' }} /></p>
           <p>Comentario:<br/> <textarea placeholder="Escribe tu comentario" style={{ padding: '5px', marginTop: '5px', height: '80px', width: '370px' }} /></p>
-          {/* Agrega aquí cualquier contenido relacionado con "Envianos un mensaje" */}
         </div>
       </div>
       <div style={copyrightStyle}>
