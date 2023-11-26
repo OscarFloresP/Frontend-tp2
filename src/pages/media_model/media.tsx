@@ -193,19 +193,22 @@ function Media({ appToken }: MediaProps) {
     if (intervalos.length <= 1) {
       return intervalos;
     }
-  
+
     // Ordenar intervalos por su inicio
     intervalos.sort((a, b) => a[0] - b[0]);
-  
+
     const resultado: number[][] = [];
     let intervaloActual = intervalos[0];
-  
+
     for (let i = 1; i < intervalos.length; i++) {
       const siguienteIntervalo = intervalos[i];
-  
+
       if (intervaloActual[1] >= siguienteIntervalo[0]) {
         // Los intervalos se superponen o son adyacentes, combínalos
-        intervaloActual = [intervaloActual[0], Math.max(intervaloActual[1], siguienteIntervalo[1])];
+        intervaloActual = [
+          intervaloActual[0],
+          Math.max(intervaloActual[1], siguienteIntervalo[1]),
+        ];
       } else {
         // Los intervalos no se superponen, añade el intervalo actual al resultado
         resultado.push(intervaloActual);
@@ -213,7 +216,6 @@ function Media({ appToken }: MediaProps) {
       }
     }
 
-  
     // Añadir el último intervalo al resultado
     resultado.push(intervaloActual);
     return mergeIntervals(resultado);
@@ -221,7 +223,7 @@ function Media({ appToken }: MediaProps) {
 
   function mergeIntervals(intervals: number[][]): number[][] {
     if (intervals.length <= 1) {
-        return intervals;
+      return intervals;
     }
 
     // Ordenar los intervalos por el inicio
@@ -230,21 +232,21 @@ function Media({ appToken }: MediaProps) {
     const result: number[][] = [intervals[0]];
 
     for (let i = 1; i < intervals.length; i++) {
-        const currentInterval = result[result.length - 1];
-        const nextInterval = intervals[i];
+      const currentInterval = result[result.length - 1];
+      const nextInterval = intervals[i];
 
-        // Verificar si los intervalos son adyacentes o se superponen
-        if (currentInterval[1] >= nextInterval[0] - 1) {
-            // Fusionar los intervalos adyacentes o superpuestos
-            currentInterval[1] = Math.max(currentInterval[1], nextInterval[1]);
-        } else {
-            // No son adyacentes ni superpuestos, agregar el intervalo actual a los resultados
-            result.push([...nextInterval]);
-        }
+      // Verificar si los intervalos son adyacentes o se superponen
+      if (currentInterval[1] >= nextInterval[0] - 1) {
+        // Fusionar los intervalos adyacentes o superpuestos
+        currentInterval[1] = Math.max(currentInterval[1], nextInterval[1]);
+      } else {
+        // No son adyacentes ni superpuestos, agregar el intervalo actual a los resultados
+        result.push([...nextInterval]);
+      }
     }
 
     return result;
-}
+  }
   useEffect(() => {
     getPatient();
     getUser();
@@ -278,7 +280,10 @@ function Media({ appToken }: MediaProps) {
             </button>
           </div>
         </div>
-        <form onSubmit={observationPost} style={{ marginBottom: "20px", borderTop: '2px solid #000' }}>
+        <form
+          onSubmit={observationPost}
+          style={{ marginBottom: "20px", borderTop: "2px solid #000" }}
+        >
           <div className="row justify-content-between">
             <div className="col-md-4">
               <div className="pt-4 pb-4">
@@ -397,45 +402,37 @@ function Media({ appToken }: MediaProps) {
           )}
         </div>
         <div>
-          
           <br />
           {results.length === 0 ? (
             <p></p>
           ) : (
             <div>
-              <h2 className="pt-5">Resultados del paciente</h2> 
+              <h2 className="pt-5">Resultados del paciente</h2>
               resultados con un 90% de exactitud
-            <div className="row">
-              <div className="col col-md-3 pb-3">
-                {results.map((result: IResult) => (
-                  <div key={result._id}>
-                    {result.ictal_time &&
-                    typeof result.ictal_time === "string" ? (
-                      <div> 
-                        {combinarIntervalos(JSON.parse(result.ictal_time)).map(
-                          (time: number[], index: number) => (
-                            <div key={index}>
-                              <div className="card text-white bg-success mb-3">
-                                <div className="card-header">
-                                  Epilepsia ictal detectada
-                                </div>
-                                <div className="card-body">
-                                  <p className="card-text">
-                                    {`Intervalo de tiempo en segundos ${time[0]} - ${time[1]}`}
-                                  </p>
-                                </div>
-                              </div>
+              <div className="row">
+                {results.map((result: IResult) =>
+                  result.ictal_time && typeof result.ictal_time === "string" ? (
+                    combinarIntervalos(JSON.parse(result.ictal_time)).map(
+                      (time: number[], index: number) => (
+                        <div className="col-md-3 pb-3" key={index}>
+                          <div className="card text-white bg-success mb-3">
+                            <div className="card-header">
+                              Epilepsia ictal detectada
                             </div>
-                          )
-                        )}
-                      </div>
-                    ) : (
+                            <div className="card-body">
+                              <p className="card-text">{`Intervalo de tiempo en segundos ${time[0]} - ${time[1]}`}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <div className="col-md-3 pb-3" key={result._id}>
                       <span>Error: Formato de ictal_time incorrecto</span>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  )
+                )}
               </div>
-            </div>
             </div>
           )}
         </div>
