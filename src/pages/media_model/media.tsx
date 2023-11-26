@@ -189,7 +189,62 @@ function Media({ appToken }: MediaProps) {
     console.log(data);
     return data;
   };
+  function combinarIntervalos(intervalos: number[][]): number[][] {
+    if (intervalos.length <= 1) {
+      return intervalos;
+    }
+  
+    // Ordenar intervalos por su inicio
+    intervalos.sort((a, b) => a[0] - b[0]);
+  
+    const resultado: number[][] = [];
+    let intervaloActual = intervalos[0];
+  
+    for (let i = 1; i < intervalos.length; i++) {
+      const siguienteIntervalo = intervalos[i];
+  
+      if (intervaloActual[1] >= siguienteIntervalo[0]) {
+        // Los intervalos se superponen o son adyacentes, combínalos
+        intervaloActual = [intervaloActual[0], Math.max(intervaloActual[1], siguienteIntervalo[1])];
+      } else {
+        // Los intervalos no se superponen, añade el intervalo actual al resultado
+        resultado.push(intervaloActual);
+        intervaloActual = siguienteIntervalo;
+      }
+    }
 
+  
+    // Añadir el último intervalo al resultado
+    resultado.push(intervaloActual);
+    return mergeIntervals(resultado);
+  }
+
+  function mergeIntervals(intervals: number[][]): number[][] {
+    if (intervals.length <= 1) {
+        return intervals;
+    }
+
+    // Ordenar los intervalos por el inicio
+    intervals.sort((a, b) => a[0] - b[0]);
+
+    const result: number[][] = [intervals[0]];
+
+    for (let i = 1; i < intervals.length; i++) {
+        const currentInterval = result[result.length - 1];
+        const nextInterval = intervals[i];
+
+        // Verificar si los intervalos son adyacentes o se superponen
+        if (currentInterval[1] >= nextInterval[0] - 1) {
+            // Fusionar los intervalos adyacentes o superpuestos
+            currentInterval[1] = Math.max(currentInterval[1], nextInterval[1]);
+        } else {
+            // No son adyacentes ni superpuestos, agregar el intervalo actual a los resultados
+            result.push([...nextInterval]);
+        }
+    }
+
+    return result;
+}
   useEffect(() => {
     getPatient();
     getUser();
@@ -356,8 +411,8 @@ function Media({ appToken }: MediaProps) {
                   <div key={result._id}>
                     {result.ictal_time &&
                     typeof result.ictal_time === "string" ? (
-                      <div>
-                        {JSON.parse(result.ictal_time).map(
+                      <div> 
+                        {combinarIntervalos(JSON.parse(result.ictal_time)).map(
                           (time: number[], index: number) => (
                             <div key={index}>
                               <div className="card text-white bg-success mb-3">
