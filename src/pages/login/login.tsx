@@ -244,14 +244,14 @@ body {
           >
             <div className="login__field">
               <i className="login__icon fas fa-user"></i>
-              <input type="text" className="login__input" placeholder="User name / Email" 
+              <input type="text" className="login__input" placeholder="Usuario" 
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="login__field">
               <i className="login__icon fas fa-lock"></i>
-              <input type="password" className="login__input" placeholder="Password" 
+              <input type="password" className="login__input" placeholder="Contraseña" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
